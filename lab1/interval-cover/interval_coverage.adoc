@@ -1,0 +1,15 @@
+
+
+= Input
+
+|===
+|Capacity | Weight |Passed
+
+| 5
+| 3
+| true
+
+|===
+
+
+

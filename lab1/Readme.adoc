@@ -1,0 +1,11 @@
+= Introduction to algorithms lab1
+
+These are the 1:th laboratory for the course Algoritmisk problemlösning given by Lindköpings Tekniska Högskola in spring of 2025.
+
+== Why Go programming language
+
+I chose to use Go language because it is something I did not know before. The labs have shown me
+that it is quit an easy language to learn and that it runs faster than most other
+programming languages  with exceptions on C, C++ and RUST.
+
+

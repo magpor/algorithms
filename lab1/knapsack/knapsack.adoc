@@ -1,0 +1,39 @@
+
+== Input
+
+The input consists of between and test cases. Each test case begins with an integer , giving the capacity of the knapsack, and an integer , giving the number of objects. Then follow lines, each giving the value and weight of the objects. Both values and weights are integers between and .
+
+== Solution
+
+This is a typical recursion problem that repeats the same result. Using a memorize function to store the results of the previous calculations will make the program run faster.
+
+Without memorize function it will be O(2^n)
+
+
+== Test cases
+
+|===
+|Value | Weight | Values | Number of items chosen | Items chose | Passed
+
+| 5
+|3
+| (1 5) +
+(10 5) +
+(100 5)
+|1
+|2
+| true
+
+| 6
+|4
+| (5 4) +
+(4 3) +
+(3 2) +
+(2 1)
+|3
+|1,2,3
+| true
+|===
+
+
+

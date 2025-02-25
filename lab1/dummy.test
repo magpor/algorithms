@@ -1,0 +1,127 @@
+
+/*
+func getInterval(interval []string) Interval {
+	return toInterval(interval)
+}
+
+func getIntervals(line []string) []Interval {
+	given_intervals_as_strings := strings.Split(line[1], ",")
+	given_intervals := make([]Interval, len(given_intervals_as_strings))
+	for i := 0; i < len(given_intervals_as_strings); i++ {
+		given_intervals[i] = toInterval(given_intervals_as_strings[i])
+	}
+	return given_intervals
+}
+*/
+/*
+	argsWithoutProgram := os.Args[1:] //Parse the arguments without the program name
+	if len(argsWithoutProgram) != 2 {
+		log.Println("The program expects two arguments where the first is the target_interval interval and the second are the given intervals")
+		return
+	}
+
+	targetInterval := getTargetInterval(argsWithoutProgram)
+	log.Printf("Target interval is: %d\n", targetInterval)
+
+	givenIntervals := getGivenIntervals(argsWithoutProgram)
+	log.Printf("Given intervals are: %d\n", givenIntervals)
+
+
+
+
+/*
+		argsWithoutProgram := os.Args[1:] //Parse the arguments without the program name
+
+		if len(argsWithoutProgram) != 1 {
+			log.Println("The program expects a path to the file containing the test data")
+			return
+		}
+
+		//Open the file and check if an error occurred or not
+		file, err := os.Open(argsWithoutProgram[0])
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		//Defer the closing of the file until the function completes
+		defer func(file *os.File) {
+			err := file.Close()
+			if err != nil {
+				log.Fatal(err)
+			}
+		}(file)
+
+		//Scan the file
+		scanner := bufio.NewScanner(file)
+		for scanner.Scan() {
+
+			//Create a test case
+			testCase := TestCase{}
+
+			//Scan the target interval for the test case
+			testCase.targetInterval = toInterval(scanner.Text())
+
+			//Scan the number of given intervals included in the test case
+			scanner.Scan()
+			numberOfIntervals, err := strconv.Atoi(scanner.Text())
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			//Scan the given intervals for the test case and sort them in increasing start order
+			testCase.givenIntervals = make([]Interval, numberOfIntervals)
+			for i := 0; i < numberOfIntervals; i++ {
+				scanner.Scan()
+				testCase.givenIntervals[i] = toInterval(scanner.Text())
+				testCase.givenIntervals[i].index = i
+			}
+
+			//Sorts the gien intervals in increasing start order
+			sort.Slice(testCase.givenIntervals, func(i, j int) bool {
+				return testCase.givenIntervals[i].start < testCase.givenIntervals[j].start
+			})
+
+			//Run the test case and then print it out
+			cover(&testCase)
+		}
+	*/
+
+
+	/*
+    		for scanner.Scan() {
+
+    			switch {
+    			}
+
+    			//Create a test case
+    			testCase := TestCase{}
+
+    			//Scan the target interval for the test case
+    			token := scanner.Text()
+    			testCase.targetInterval = toInterval(token)
+
+    			//Scan the number of given intervals included in the test case
+
+    			token = scanner.Scan().Text()
+    			numberOfIntervals, err := strconv.Atoi(token)
+    			if err != nil {
+    				log.Fatal(err)
+    			}
+
+    			//Scan the given intervals for the test case and sort them in increasing start order
+    			testCase.givenIntervals = make([]Interval, numberOfIntervals)
+    			for i := 0; i < numberOfIntervals; i++ {
+    				scanner.Scan()
+    				testCase.givenIntervals[i] = toInterval(scanner.Text())
+    				testCase.givenIntervals[i].index = i
+    			}
+
+    			//Sorts the given intervals in increasing start order
+    			sort.Slice(testCase.givenIntervals, func(i, j int) bool {
+    				return testCase.givenIntervals[i].start < testCase.givenIntervals[j].start
+    			})
+
+    			//Run the test case and then print it out
+    			cover(&testCase)
+    		}
+    	*/
