@@ -82,12 +82,25 @@ func toInt(s *string) int {
 }
 
 // UnionFind / A disjoint-set data structure with union-by-rank and path compression
-func (u *UnionFind) UnionFind(n int) {
-	u.components = n
-	u.rank = make([]int, n)
-	u.sz = make([]int, n)
-	u.parent = make([]int, n)
-	for i := 0; i < n; i++ {
+func (u *UnionFind) UnionFind(numberOfComponents int) {
+	u.components = numberOfComponents
+
+	//Reuse the array in-case the number of components will fit in existing array
+	if u.rank == nil || len(u.rank) < numberOfComponents {
+		u.rank = make([]int, numberOfComponents)
+	}
+
+	//Reuse the array in-case the number of components will fit in existing array
+	if u.sz == nil || len(u.sz) < numberOfComponents {
+		u.sz = make([]int, numberOfComponents)
+	}
+
+	//Reuse the array in-case the number of components will fit in existing array
+	if u.parent == nil || len(u.parent) < numberOfComponents {
+		u.parent = make([]int, numberOfComponents)
+	}
+
+	for i := 0; i < numberOfComponents; i++ {
 		u.sz[i] = 1     //Each component is initially of size 1
 		u.rank[i] = 0   //Each component is initially of rank 0
 		u.parent[i] = i //Each component is initially its own parent
@@ -96,9 +109,11 @@ func (u *UnionFind) UnionFind(n int) {
 
 // Find the root of the component using path compression
 func (u *UnionFind) Find(i int) int {
-	if u.parent[i] == i { //If the parent is itself, then it is the root
+	if u.parent[i] == i {
+		//If the parent is itself, then it is the root of the component
 		return i
-	} else { //Compression path, recursively find the root of the parent
+	} else {
+		//Compression path, recursively find the root of the parent
 		u.parent[i] = u.Find(u.parent[i])
 		return u.parent[i]
 	}
