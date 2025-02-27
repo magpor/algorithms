@@ -12,34 +12,32 @@ import (
 //A program that solves the "knapsack 0-1" problem
 
 //Optimal sub-structure
-//Case1: The item belongs in the optimal sub-fill
-//Case2: The item does not belong in the optimal sub-fill
-
-type State int
-
-const (
-	CapacityAndObjects State = 0
-	Intervals          State = 1
-)
+//Case1: The item belongs in the optimal knapsack
+//Case2: The item does not belong in the optimal knapsack
 
 func main() {
-	var state = CapacityAndObjects
 	var profits []int
 	var weights []int
 	var values []string
-	var capacity int = 0
-	var numberOfItems int = 0
-	var numberOfItemsRead int = 0
+	var capacity = 0
+	var numberOfItems = 0
+	var numberOfItemsRead = 0
 	var memo [][]int
 
 	var responseBuilder = strings.Builder{}
+	var state = 0
 
-	//Start scanning the input until end-of-line appears
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {
-		value := scanner.Text()
+
+		//Check for scanner error and log fatal in-case of error
+		var err = scanner.Err()
+		if err != nil {
+			log.Fatal(err)
+		}
+
 		switch state {
-		case CapacityAndObjects:
+		case 0:
 
 			//Reset
 			capacity = 0
@@ -47,6 +45,7 @@ func main() {
 			numberOfItemsRead = 0
 
 			//Get the capacity of the knapsack and the number of items in the test
+			value := scanner.Text()
 			values = strings.Split(value, " ")
 			capacity = toInt(&values, 0)
 			numberOfItems = toInt(&values, 1)
@@ -56,9 +55,10 @@ func main() {
 			weights = make([]int, numberOfItems)
 
 			//Move to the Intervals state
-			state = Intervals
-		case Intervals:
+			state = 1
+		case 1:
 			//Get the profit and weight of the item
+			value := scanner.Text()
 			values = strings.Split(value, " ")
 			profits[numberOfItemsRead] = toInt(&values, 0)
 			weights[numberOfItemsRead] = toInt(&values, 1)
@@ -85,21 +85,9 @@ func main() {
 				}
 				fmt.Println(responseBuilder.String())
 
-				//Print out memo to see how it looks like
-				/*
-					var memoBuilder = strings.Builder{}
-					for i := 0; i < len(memo); i++ {
-						for j := 0; j < len(memo[i]); j++ {
-							memoBuilder.WriteString(strconv.Itoa(memo[i][j]))
-							memoBuilder.WriteString(" ")
-						}
-						memoBuilder.WriteString("\n")
-					}
-					fmt.Println(memoBuilder.String())
-				*/
-
+				printMemo(&memo)
 				//Move to the next knapsack test
-				state = CapacityAndObjects
+				state = 1
 			}
 		}
 	}
@@ -157,12 +145,12 @@ func knapsack(capacity int, weights *[]int, profits *[]int, n int, memo *[][]int
 	}
 
 	//Backtrack
-	var capacityLeftToUse = capacity
+	var capacityLeft = capacity
 	var selected []int
 	for ii := n; ii > 0; ii-- {
-		if (*memo)[ii][capacityLeftToUse] != (*memo)[ii-1][capacityLeftToUse] {
-			selected = append(selected, ii-1)     //Add the index to the selected
-			capacityLeftToUse -= (*weights)[ii-1] //Change the capacity left
+		if (*memo)[ii][capacityLeft] != (*memo)[ii-1][capacityLeft] {
+			selected = append(selected, ii-1) //Add the index to the selected
+			capacityLeft -= (*weights)[ii-1]  //Change the capacity left
 		}
 	}
 	return (*memo)[n][capacity], selected
@@ -181,4 +169,16 @@ func toInt(values *[]string, index int) int {
 		log.Fatal(err)
 	}
 	return value1
+}
+
+func printMemo(memo *[][]int) {
+	var memoBuilder = strings.Builder{}
+	for i := 0; i < len(*memo); i++ {
+		for j := 0; j < len((*memo)[i]); j++ {
+			memoBuilder.WriteString(strconv.Itoa((*memo)[i][j]))
+			memoBuilder.WriteString(" ")
+		}
+		memoBuilder.WriteString("\n")
+	}
+	fmt.Println(memoBuilder.String())
 }

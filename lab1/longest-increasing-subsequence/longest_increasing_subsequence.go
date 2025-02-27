@@ -88,20 +88,20 @@ func findLongestIncrementingSubsequence(x []int, size int) (int, []int, []int) {
 	for i := 0; i < size; i++ {
 
 		//Binary search for the largest index j such that x[subsequence[j]] < x[j]
-		var lo = 1
-		var hi = length + 1
-		for lo < hi {
-			var mid = lo + ((hi - lo) >> 1)
+		var low = 1
+		var high = length + 1
+		for low < high {
+			var mid = low + ((high - low) >> 1)
 			if x[subsequence[mid]] >= x[i] { //This means that the current value is not larger than the previous value,
 				// so keep searching in the upper parts of the subsequence
-				hi = mid
+				high = mid
 			} else if x[subsequence[mid]] < x[i] { //This means that the current value is larger than the previous value
-				//, so set the lo to the next index after the current largest in the subsequence
-				lo = mid + 1
+				//, so set the low to the next index after the current largest in the subsequence
+				low = mid + 1
 			}
 		}
 
-		newLength = lo                                    //The new length of the longest increasing subsequence ending at i
+		newLength = low                                   //The new length of the longest increasing subsequence ending at i
 		subsequenceAncestor[i] = subsequence[newLength-1] //Add to the ancestor slice the previous last value of the longest increasing subsequence
 		subsequence[newLength] = i                        //Add to the new last value to the longest increasing subsequence
 
